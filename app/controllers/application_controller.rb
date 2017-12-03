@@ -10,5 +10,13 @@ class ApplicationController < Sinatra::Base
    erb :index
   end
 
+  get "/signup" do
+    if !User.exists?(session[:user_id])
+      erb :'/users/signup'
+    else
+      redirect "/dreams"
+   end
+  end
+
 
 end
