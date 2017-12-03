@@ -18,5 +18,21 @@ class ApplicationController < Sinatra::Base
    end
   end
 
+  post "/signup" do
+    if params[:username] == "" || params[:password] == "" || params[:email] == ""
+      redirect "/signup"
+    else
+      @user = User.new(:username => params[:username], :password => params[:password])
+      @user.save
+      session[:user_id] = @user.id
+      redirect "/dreams"
+    end
+  end
+
+  get '/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    erb :'/users/profile'
+  end
+
 
 end
