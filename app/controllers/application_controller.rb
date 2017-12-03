@@ -100,5 +100,24 @@ class ApplicationController < Sinatra::Base
    end
   end
 
+  get '/dreams/:slug/edit' do
+   if logged_in?
+    @dream = Dream.find(params[:slug])
+    erb :'dreams/edit'
+   else
+    redirect "/login"
+   end
+  end
+
+  patch '/dreams/:slug' do
+   @dream = Dream.find(params[:slug])
+   if params[:summary] == ""
+    redirect "/dreams/#{params[:slug]}/edit"
+   else
+    @dream.update(summary: params[:summary])
+    redirect "/dreams/#{params[:slug]}"
+   end
+  end
+
 
 end
