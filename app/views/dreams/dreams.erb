@@ -6,7 +6,12 @@
  </head>
  <body>
    <h1>Dreams:</h1>
-   <h2><%= @dreams.each {|t| "#{t[:date]}"} %> </h2>
+   <ul>
+     <% @dreams.each do |dream|%>
+     <a href="/dreams/<%= dream.id %>">
+     <%= dream.date %></a>
+     <% end %>
+   </ul>
 
  </body>
 </html>
