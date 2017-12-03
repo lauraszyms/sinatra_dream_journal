@@ -70,5 +70,26 @@ class ApplicationController < Sinatra::Base
    end
   end
 
+  post '/dreams' do
+   @user = current_user
+   if params[:date] == ""
+    redirect "/dreams/new"
+   else
+    @dream = Dream.create(date: params[:date], keywords: params[:keywords], hours_slept: params[:hours_slept], lucid_dream?: params[:lucid_dream?], summary: params[:summary])
+    @dream.user_id = @user.id
+    @dream.save
+    redirect '/dreams'
+   end
+  end
+
+  get '/dreams' do
+   if logged_in?
+    @dreams = Dream.all
+    erb :'/dreams/dreams'
+   else
+    redirect "/login"
+   end
+  end
+
 
 end
