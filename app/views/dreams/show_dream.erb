@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Dream:</title>
+ </head>
+ <body>
+   <h2> <%= @dream[:summary] %> </h2>
+
+   <form method="post" action="/dreams/<%= @dream.id %>/edit">
+   <input id="hidden" type="hidden" name="_method" value="edit">
+   <input type="submit" value="Edit Dream">
+   </form>
+
+   <form method="post" action="/dreams/<%= @dream.id %>/delete">
+   <input id="hidden" type="hidden" name="_method" value="delete">
+   <input type="submit" value="Delete Dream">
+   </form>
+
+ </body>
+</html>
