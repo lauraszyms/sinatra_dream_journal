@@ -119,5 +119,14 @@ class ApplicationController < Sinatra::Base
    end
   end
 
+  delete '/dreams/:slug/delete' do
+   @dream = Dream.find(params[:slug])
+   if logged_in? && @dream.user_id == current_user.id
+    @dream.delete
+   else
+    redirect "/login"
+   end
+  end
+
 
 end
