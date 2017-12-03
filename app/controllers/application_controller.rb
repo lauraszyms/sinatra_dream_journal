@@ -91,5 +91,14 @@ class ApplicationController < Sinatra::Base
    end
   end
 
+  get '/dreams/:slug'do
+   if logged_in?
+    @dream = Dream.find(params[:slug])
+    erb :'dreams/show_dream'
+   else
+    redirect "/login"
+   end
+  end
+
 
 end
