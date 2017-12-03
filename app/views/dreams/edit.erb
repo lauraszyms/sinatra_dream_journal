@@ -1,1 +1,8 @@
+<h1>Edit Your Dream:</h1>
 
+<form method="post" action="/dreams/<%= @dream.id %>">
+
+<input id="hidden" type="hidden" name="_method" value="patch">
+Dream: <input type="string" value="<%=@dream.summary%>" name="summary">
+<input type="submit" value="submit">
+</form>
