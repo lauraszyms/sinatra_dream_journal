@@ -34,6 +34,7 @@ class DreamsController < ApplicationController
   get '/dreams/:id'do
    if logged_in?
     @dream = Dream.find(params[:id])
+    @author = User.find(@dream.user_id)
     erb :'dreams/show_dream'
    else
     redirect "/login"
