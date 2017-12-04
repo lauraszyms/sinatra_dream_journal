@@ -1,13 +1,6 @@
 <h1>~Your Dream Journal~</h1>
 
-<h2>Dreams:</h2>
-
-<ul>
-  <% @user.dreams.each do |dream|%>
-  <a href="/dreams/<%= dream.id %>">
-  <%= dream.date %></a><br>
-  <% end %>
-</ul>
+<h2><a href="/dreams/dreams">Dream List</a></h2>
 
 <p><a href="/dreams/new">New Dream</a></p>
 
