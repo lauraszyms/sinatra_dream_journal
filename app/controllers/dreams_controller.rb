@@ -40,9 +40,9 @@ class DreamsController < ApplicationController
    end
   end
 
-  get '/dreams/:id/edit' do
-   if logged_in?
-    @dream = Dream.find(params[:id])
+  post '/dreams/:id/edit' do
+   @dream = Dream.find(params[:id])
+   if logged_in? && @dream.user_id == current_user.id
     erb :'dreams/edit'
    else
     redirect "/login"
@@ -54,15 +54,17 @@ class DreamsController < ApplicationController
    if params[:summary] == ""
     redirect "/dreams/#{params[:id]}/edit"
    else
-    @dream.update(summary: params[:summary])
+    @dream.update(date: params[:date], keywords: params[:keywords], hours_slept: params[:hours_slept], lucid_dream?: params[:lucid_dream?], summary: params[:summary])
     redirect "/dreams/#{params[:id]}"
    end
   end
 
   delete '/dreams/:id/delete' do
    @dream = Dream.find(params[:id])
-   if logged_in? && @dream.user_id == current_user.id
+   @user = current_user
+   if logged_in? && @dream.user_id == @user.id
     @dream.delete
+    erb :'/dreams/delete'
    else
     redirect "/login"
    end

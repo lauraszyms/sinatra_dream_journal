@@ -3,6 +3,10 @@
 <form method="post" action="/dreams/<%= @dream.id %>">
 
 <input id="hidden" type="hidden" name="_method" value="patch">
-Dream: <input type="string" value="<%=@dream.summary%>" name="summary">
+Date: <input type="date" value="<%=@dream.date%>" name="date"><br><br>
+Keywords: <input type="string" value="<%=@dream.keywords%>" name="keywords"><br><br>
+Hours Slept: <input type="float" value="<%=@dream.hours_slept%>" name="hours_slept"><br><br>
+Lucid Dream: <input type="boolean" value="<%=@dream.lucid_dream?%>" name="lucid_dream?"><br><br>
+Summary: <input type="string" value="<%=@dream.summary%>" name="summary"><br><br>
 <input type="submit" value="submit">
 </form>
