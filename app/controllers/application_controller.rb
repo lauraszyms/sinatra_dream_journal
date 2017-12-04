@@ -20,18 +20,18 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/signup" do
-    if params[:username] == "" || params[:password] == "" || params[:email] == ""
+    if params[:username] == "" || params[:password] == ""
       redirect "/signup"
     else
       @user = User.new(:username => params[:username], :password => params[:password])
       @user.save
       session[:user_id] = @user.id
-      redirect "/dreams"
+      redirect "/users/#{@user.id}"
     end
   end
 
-  get '/users/:slug' do
-    @user = User.find_by_slug(params[:slug])
+  get '/users/:id' do
+    @user = User.find_by(params[:id])
     erb :'/users/profile'
   end
 
@@ -48,7 +48,7 @@ class ApplicationController < Sinatra::Base
 
    if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect "/dreams"
+      redirect "/users/#{@user.id}"
    else
       redirect "/signup"
    end
@@ -65,6 +65,7 @@ class ApplicationController < Sinatra::Base
 
   get '/dreams/new' do
     if logged_in?
+     @user = current_user
      erb :'/dreams/new'
     else
      redirect "/login"
@@ -85,6 +86,7 @@ class ApplicationController < Sinatra::Base
 
   get '/dreams' do
    if logged_in?
+    @user = current_user
     @dreams = Dream.all
     erb :'/dreams/dreams'
    else
@@ -92,36 +94,36 @@ class ApplicationController < Sinatra::Base
    end
   end
 
-  get '/dreams/:slug'do
+  get '/dreams/:id'do
    if logged_in?
-    @dream = Dream.find(params[:slug])
+    @dream = Dream.find(params[:id])
     erb :'dreams/show_dream'
    else
     redirect "/login"
    end
   end
 
-  get '/dreams/:slug/edit' do
+  get '/dreams/:id/edit' do
    if logged_in?
-    @dream = Dream.find(params[:slug])
+    @dream = Dream.find(params[:id])
     erb :'dreams/edit'
    else
     redirect "/login"
    end
   end
 
-  patch '/dreams/:slug' do
-   @dream = Dream.find(params[:slug])
+  patch '/dreams/:id' do
+   @dream = Dream.find(params[:id])
    if params[:summary] == ""
-    redirect "/dreams/#{params[:slug]}/edit"
+    redirect "/dreams/#{params[:id]}/edit"
    else
     @dream.update(summary: params[:summary])
-    redirect "/dreams/#{params[:slug]}"
+    redirect "/dreams/#{params[:id]}"
    end
   end
 
-  delete '/dreams/:slug/delete' do
-   @dream = Dream.find(params[:slug])
+  delete '/dreams/:id/delete' do
+   @dream = Dream.find(params[:id])
    if logged_in? && @dream.user_id == current_user.id
     @dream.delete
    else
