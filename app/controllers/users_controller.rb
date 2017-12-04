@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+
   get "/signup" do
     if !User.exists?(session[:user_id])
       erb :'/users/signup'
@@ -11,7 +12,7 @@ class UsersController < ApplicationController
 
   post "/signup" do
     if params[:username] == "" || params[:password] == ""
-      redirect "/signup"
+      erb :'/users/invalid'
     else
       @user = User.new(:username => params[:username], :password => params[:password])
       @user.save
@@ -40,7 +41,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect "/users/#{@user.id}"
    else
-      redirect "/signup"
+      erb :'/users/invalid'
    end
   end
 
