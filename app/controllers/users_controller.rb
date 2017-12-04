@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   post "/signup" do
     if params[:username] == "" || params[:password] == ""
       erb :'/users/invalid'
+    elsif User.find_by(username: params[:username]) != nil
+      erb :'/users/username_taken'
     else
       @user = User.new(:username => params[:username], :password => params[:password])
       @user.save
@@ -36,7 +38,6 @@ class UsersController < ApplicationController
 
   post "/login" do
    @user = User.find_by(:username => params[:username])
-
    if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect "/users/#{@user.id}"
