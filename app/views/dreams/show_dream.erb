@@ -5,12 +5,17 @@
   <title>Dream:</title>
  </head>
  <body>
-   <h2> <%= @dream[:summary] %> </h2>
-
+   <h1> Dream: <%= @dream[:date] %> </h1>
+   <h2> Hours Slept: <%= @dream[:hours_slept] %> </h2>
+   <h3> Lucid Dreaming: <%= @dream[:lucid_dream?] %> </h3>
+   <h3> Summary: </h3>
+   <p><%= @dream[:summary] %> </p>
+   <br>
    <form method="post" action="/dreams/<%= @dream.id %>/edit">
    <input id="hidden" type="hidden" name="_method" value="edit">
    <input type="submit" value="Edit Dream">
-   </form>
+   </form><br>
+
 
    <form method="post" action="/dreams/<%= @dream.id %>/delete">
    <input id="hidden" type="hidden" name="_method" value="delete">
