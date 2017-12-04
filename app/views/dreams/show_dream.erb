@@ -6,9 +6,10 @@
  </head>
  <body>
    <h1> Dream: <%= @dream[:date] %> </h1>
-   <h2> Hours Slept: <%= @dream[:hours_slept] %> </h2>
+   <h2> Keywords: <%= @dream[:keywords] %> </h2>
+   <h3> Hours Slept: <%= @dream[:hours_slept] %> </h3>
    <h3> Lucid Dreaming: <%= @dream[:lucid_dream?] %> </h3>
-   <h3> Summary: </h3>
+   <h2> Summary: </h2>
    <p><%= @dream[:summary] %> </p>
    <br>
    <form method="post" action="/dreams/<%= @dream.id %>/edit">

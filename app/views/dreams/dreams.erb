@@ -9,11 +9,12 @@
    <ul>
      <% @dreams.each do |dream|%>
      <a href="/dreams/<%= dream.id %>">
-     <%= dream.date %></a>
+     <%= dream.date %></a><br>
      <% end %>
    </ul>
 
-   <p><a href="/dreams/new">New Dream</a></p>
+   <p><a href="/dreams/new"> <button>New Dream</button></a></p>
+   <p><a href="/logout"><button>Log Out</button></a></p>
 
  </body>
 </html>
