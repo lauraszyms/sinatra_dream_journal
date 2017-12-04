@@ -14,7 +14,8 @@ class ApplicationController < Sinatra::Base
     if !User.exists?(session[:user_id])
       erb :'/users/signup'
     else
-      redirect "/dreams"
+      @user = current_user
+      redirect "/users/#{current_user.id}"
    end
   end
 
@@ -64,7 +65,7 @@ class ApplicationController < Sinatra::Base
 
   get '/dreams/new' do
     if logged_in?
-     erb :'/tweets/create_tweet'
+     erb :'/dreams/new'
     else
      redirect "/login"
    end
@@ -78,7 +79,7 @@ class ApplicationController < Sinatra::Base
     @dream = Dream.create(date: params[:date], keywords: params[:keywords], hours_slept: params[:hours_slept], lucid_dream?: params[:lucid_dream?], summary: params[:summary])
     @dream.user_id = @user.id
     @dream.save
-    redirect '/dreams'
+    redirect "/dreams/#{@dream.id}"
    end
   end
 
