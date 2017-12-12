@@ -31,6 +31,7 @@ class UsersController < ApplicationController
   get '/users/:id' do
     @user = User.find(params[:id])
     @dreams = @user.dreams
+    binding.pry
     @sorted_dreams = @dreams.order(hours_slept: :desc)
     erb :'/users/profile'
   end

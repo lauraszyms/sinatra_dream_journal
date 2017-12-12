@@ -1,0 +1,30 @@
+<p><%= params[:message] %></p>
+
+<h1>~ <%= @user.username %>'s Dream Journal~</h1>
+
+<h3>Your Dreams:</h3>
+<ul>
+  <% @user.dreams.each do |dream|%>
+  <a href="/dreams/<%= dream.id %>">
+  <%= dream.date %> <%= dream.keywords %> </a><br>
+  <% end %>
+</ul>
+
+<h3>Your Dreams by Hours Slept:</h3>
+
+<ul>
+  <% @sorted_dreams.each do |dream|%>
+  <a href="/dreams/<%= dream.id %>">
+  Hours Slept: <%= dream.hours_slept %> on <%= dream.date %> </a><br>
+  <% end %>
+</ul>
+
+<!-- sort dreams by hours_slept (sorted highest to lowest) -->
+
+
+
+<p><a href="/dreams/new"><button>New Dream</button></a></p>
+
+<h2><a href="/dreams"><button>Dream List</button></a></h2>
+
+<p><a href="/logout"><button>Log Out</button></a></p>
