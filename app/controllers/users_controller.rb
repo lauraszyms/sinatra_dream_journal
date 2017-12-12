@@ -12,19 +12,26 @@ class UsersController < ApplicationController
 
   post "/signup" do
     if params[:username] == "" || params[:password] == ""
-      erb :'/users/invalid'
+      erb :'/users/signup', locals: { message: 'Must have a valid username or password!' }
     elsif User.find_by(username: params[:username]) != nil
-      erb :'/users/username_taken'
+      #db.conn("SELECT * FROM users WHERE username = 'Andrew' LIMIT 1")
+      #=> nil
+      erb :'/users/signup', locals: { message: 'Username is already taken!' }
     else
       @user = User.new(:username => params[:username], :password => params[:password])
-      @user.save
-      session[:user_id] = @user.id
-      redirect "/users/#{@user.id}"
+      if @user.save
+        session[:user_id] = @user.id
+        redirect "/users/#{@user.id}?message=success"
+      else
+        erb :'/users/signup', locals: { message: @user.errors.full_messages.to_sentence }
+      end
     end
   end
 
   get '/users/:id' do
     @user = User.find(params[:id])
+    @dreams = @user.dreams
+    @sorted_dreams = @dreams.order(hours_slept: :desc)
     erb :'/users/profile'
   end
 

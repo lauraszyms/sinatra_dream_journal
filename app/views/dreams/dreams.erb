@@ -9,7 +9,7 @@
    <ul>
      <% @dreams.each do |dream|%>
      <a href="/dreams/<%= dream.id %>">
-     <%= dream.date %> <%= dream.keywords %></a><br>
+     <%= dream.date %> <%= dream.keywords %> - <%= User.find(dream.user_id).username %></a><br>
      <% end %>
    </ul>
 
